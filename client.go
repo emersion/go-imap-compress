@@ -28,15 +28,15 @@ func (c *Client) Compress(mech string) (err error) {
 
 	cmd := &Command{Mechanism: mech}
 
-	status, err := c.client.Execute(cmd, nil)
-	if err != nil {
-		return
-	}
-	if err = status.Err(); err != nil {
-		return
-	}
-
 	err = c.client.Upgrade(func (conn net.Conn) (net.Conn, error) {
+		status, err := c.client.Execute(cmd, nil)
+		if err != nil {
+			return nil, err
+		}
+		if err = status.Err(); err != nil {
+			return nil, err
+		}
+
 		return NewDeflateConn(conn, flate.DefaultCompression)
 	})
 	if err != nil {
