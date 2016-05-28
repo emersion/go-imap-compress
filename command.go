@@ -6,8 +6,6 @@ import (
 	imap "github.com/emersion/go-imap/common"
 )
 
-const CommandName = "COMPRESS"
-
 // A COMPRESS command.
 type Command struct {
 	// Name of the compression mechanism.
