@@ -52,6 +52,11 @@ func (c *Client) IsCompressed() bool {
 	return c.isCompressed
 }
 
+// Check if the server supports a compression mechanism.
+func (c *Client) SupportsCompression(mech string) bool {
+	return c.client.Caps[CommandName + "=" + Deflate]
+}
+
 // Create a new client.
 func NewClient(c *imapclient.Client) *Client {
 	return &Client{client: c}
