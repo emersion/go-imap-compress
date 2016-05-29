@@ -21,6 +21,10 @@ func (c *conn) Write(b []byte) (int, error) {
 	return c.w.Write(b)
 }
 
+func (c *conn) Flush() error {
+	return c.w.Flush()
+}
+
 func (c *conn) Close() error {
 	if err := c.r.Close(); err != nil {
 		return err
