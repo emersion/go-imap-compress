@@ -14,7 +14,7 @@ type Command struct {
 
 func (cmd *Command) Command() *imap.Command {
 	return &imap.Command{
-		Name: CommandName,
+		Name: commandName,
 		Arguments: []interface{}{cmd.Mechanism},
 	}
 }

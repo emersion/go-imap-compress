@@ -54,7 +54,7 @@ func (c *Client) IsCompressed() bool {
 
 // Check if the server supports a compression mechanism.
 func (c *Client) SupportsCompression(mech string) bool {
-	return c.client.Caps[CommandName + "=" + Deflate]
+	return c.client.Caps[Capability + "=" + mech]
 }
 
 // Create a new client.
