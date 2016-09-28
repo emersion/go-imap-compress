@@ -29,11 +29,9 @@ func (c *Client) Compress(mech string) (err error) {
 	cmd := &Command{Mechanism: mech}
 
 	err = c.client.Upgrade(func (conn net.Conn) (net.Conn, error) {
-		status, err := c.client.Execute(cmd, nil)
-		if err != nil {
+		if status, err := c.client.Execute(cmd, nil); err != nil {
 			return nil, err
-		}
-		if err = status.Err(); err != nil {
+		} else if err := status.Err(); err != nil {
 			return nil, err
 		}
 

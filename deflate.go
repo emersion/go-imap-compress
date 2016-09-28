@@ -6,6 +6,10 @@ import (
 	"net"
 )
 
+type flusher interface {
+	Flush() error
+}
+
 type conn struct {
 	net.Conn
 
@@ -22,6 +26,12 @@ func (c *conn) Write(b []byte) (int, error) {
 }
 
 func (c *conn) Flush() error {
+	if f, ok := c.Conn.(flusher); ok {
+		if err := f.Flush(); err != nil {
+			return err
+		}
+	}
+
 	return c.w.Flush()
 }
 
