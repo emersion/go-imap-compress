@@ -25,7 +25,7 @@ func (err ErrNotSupported) Error() string {
 
 // Client is a COMPRESS client.
 type Client struct {
-	client *imapclient.Client
+	client       *imapclient.Client
 	isCompressed bool
 }
 
@@ -42,7 +42,7 @@ func (c *Client) Compress(mech string) error {
 
 	cmd := &Command{Mechanism: mech}
 
-	err := c.client.Upgrade(func (conn net.Conn) (net.Conn, error) {
+	err := c.client.Upgrade(func(conn net.Conn) (net.Conn, error) {
 		if status, err := c.client.Execute(cmd, nil); err != nil {
 			return nil, err
 		} else if err := status.Err(); err != nil {

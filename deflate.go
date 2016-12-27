@@ -56,7 +56,7 @@ func NewDeflateConn(c net.Conn, level int) (net.Conn, error) {
 
 	return &conn{
 		Conn: c,
-		r: r,
-		w: w,
+		r:    r,
+		w:    w,
 	}, nil
 }
