@@ -51,8 +51,8 @@ func (c *Client) IsCompressed() bool {
 }
 
 // Check if the server supports a compression mechanism.
-func (c *Client) SupportsCompression(mech string) bool {
-	return c.client.Caps[Capability + "=" + mech]
+func (c *Client) SupportCompress(mech string) (bool, error) {
+	return c.client.Support(Capability + "=" + mech)
 }
 
 // Create a new client.
