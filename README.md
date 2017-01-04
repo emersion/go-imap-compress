@@ -34,18 +34,15 @@ func main() {
 		log.Fatal(err)
 	}
 
-	// Get capabilities if needed
-	if c.Caps == nil {
-		if _, err := c.Capability(); err != nil {
-			log.Fatal(err)
-		}
-	}
-
 	// Enable compression if possible
 	comp := compress.NewClient(c)
-	if comp.SupportsCompression(compress.Deflate) {
+	if ok, err := comp.SupportCompress(compress.Deflate); err != nil {
+		log.Fatal(err)
+	} else if ok {
 		if err := comp.Compress(compress.Deflate); err != nil {
 			log.Fatal(err)
+		} else {
+			log.Printf("Compression enabled: %t", comp.IsCompress())
 		}
 	}
 
