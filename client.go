@@ -2,26 +2,10 @@ package compress
 
 import (
 	"compress/flate"
-	"errors"
 	"net"
 
 	imapclient "github.com/emersion/go-imap/client"
 )
-
-// ErrAlreadyEnabled is returned by Client.Compress when compression has
-// already been enabled on the client.
-var ErrAlreadyEnabled = errors.New("COMPRESS is already enabled")
-
-// ErrNotSupported is returned by Client.Compress when the provided
-// compression mechanism is not supported.
-type ErrNotSupported struct {
-	Mechanism string
-}
-
-// Error implements error.
-func (err ErrNotSupported) Error() string {
-	return "Cannot start compression: mechanism " + err.Mechanism + " not supported"
-}
 
 // Client is a COMPRESS client.
 type Client struct {
@@ -37,7 +21,7 @@ func (c *Client) Compress(mech string) error {
 	}
 
 	if mech != Deflate {
-		return ErrNotSupported{mech}
+		return NotSupportedError{mech}
 	}
 
 	cmd := &Command{Mechanism: mech}
@@ -49,7 +33,7 @@ func (c *Client) Compress(mech string) error {
 			return nil, err
 		}
 
-		return NewDeflateConn(conn, flate.DefaultCompression)
+		return createDeflateConn(conn, flate.DefaultCompression)
 	})
 	if err != nil {
 		return err

@@ -47,7 +47,7 @@ func (c *conn) Close() error {
 	return c.Conn.Close()
 }
 
-func NewDeflateConn(c net.Conn, level int) (net.Conn, error) {
+func createDeflateConn(c net.Conn, level int) (net.Conn, error) {
 	r := flate.NewReader(c)
 	w, err := flate.NewWriter(c, level)
 	if err != nil {
