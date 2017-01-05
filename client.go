@@ -4,12 +4,12 @@ import (
 	"compress/flate"
 	"net"
 
-	imapclient "github.com/emersion/go-imap/client"
+	"github.com/emersion/go-imap/client"
 )
 
 // Client is a COMPRESS client.
 type Client struct {
-	client       *imapclient.Client
+	client       *client.Client
 	isCompressed bool
 }
 
@@ -54,6 +54,6 @@ func (c *Client) SupportCompress(mech string) (bool, error) {
 }
 
 // NewClient creates a new client.
-func NewClient(c *imapclient.Client) *Client {
+func NewClient(c *client.Client) *Client {
 	return &Client{client: c}
 }
